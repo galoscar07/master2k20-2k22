@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+code {
+  font-family: 'Lato', sans-serif;
+}
+
+/* You can add global styles to this file, and also import other style files */
+@import 'styles/base';
+@import 'styles/buttons';
+@import 'styles/checkbox-radio';
+@import 'styles/input';
+@import 'styles/rouded-card';
+@import 'styles/page';

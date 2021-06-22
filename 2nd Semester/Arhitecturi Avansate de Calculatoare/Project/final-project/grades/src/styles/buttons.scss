@@ -1,0 +1,103 @@
+.action-button {
+  display: inline-block;
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  background-color: $color-blue-green;
+  border-radius: $border-radius-tiny;
+  color: white;
+  height: 30px;
+  line-height: 29px;
+  border: 0;
+  box-shadow: 0 8px 13px rgba(black, 0.16);
+  padding: 0 $margin-default;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.15s, background-color 0.05s;
+
+  &:hover {
+    background-color: lighten($color-blue-green, 5%);
+  }
+
+  &:focus {
+    box-shadow: 0 3px 7px rgba(black, 0.3);
+    background-color: darken($color-blue-green, 10%);
+    transition: box-shadow 0.1s $small-bouncy-out, background-color 0.1s;
+  }
+
+  &:active {
+    box-shadow: 0 1px 3px rgba(black, 0.5);
+    background-color: darken($color-blue-green, 15%);
+    transition: box-shadow 0.1s $small-bouncy-out, background-color 0.05s;
+  }
+
+}
+
+.white-button {
+  background-color: white;
+  color: $color-dark-blue-grey;
+  border: 1px solid $color-cloudy-blue;
+  &:hover {
+    background-color: darken($color-button-cancel, 0.5%);
+  }
+  &:focus {
+    box-shadow: 0 3px 7px rgba(black, 0.3);
+    background-color: darken(white, 10%);
+    transition: box-shadow 0.1s $small-bouncy-out, background-color 0.1s;
+  }
+  &:active {
+    box-shadow: 0 1px 3px rgba(black, 0.5);
+    background-color: darken(white, 15%);
+    transition: box-shadow 0.1s $small-bouncy-out, background-color 0.05s;
+  }
+}
+
+.button-cancel {
+  background-color: $color-button-cancel;
+  color: $color-dark-blue-grey;
+  &:hover {
+    background-color: lighten($color-button-cancel, 2%);
+  }
+
+  &:focus {
+    box-shadow: 0 3px 7px rgba(black, 0.3);
+    background-color: darken(#f1f1f1, 10%);
+    transition: box-shadow 0.1s $small-bouncy-out, background-color 0.1s;
+  }
+
+  &:active {
+    box-shadow: 0 1px 3px rgba(black, 0.5);
+    background-color: darken($color-button-cancel, 15%);
+    transition: box-shadow 0.1s $small-bouncy-out, background-color 0.05s;
+  }
+}
+
+.back-button {
+  //margin-right: $margin-big;
+  width: 50px;
+  height: 40px;
+  padding: 0;
+  background-image: url("../images/svg/back.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transition: background-color 0.05s;
+  border-bottom-left-radius: $border-radius-tiny;
+  border-top-left-radius: $border-radius-tiny;
+  &:hover {
+    background-color: darken($color-blue-green, 2%);
+  }
+  &:active {
+    box-shadow: 0 1px 3px rgba(black, 0.1);
+    transition: box-shadow 0.1s $small-bouncy-out, background-color 0.05s;
+  }
+  &.disabled {
+    background-image: url("../images/svg/left.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: background-color 0.05s;
+    &:active {
+      box-shadow: none;
+    }
+  }
+}

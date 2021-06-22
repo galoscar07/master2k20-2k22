@@ -1,0 +1,119 @@
+// Colors
+$color-dark-blue-grey: #546A76; //cadet
+$color-blue-green: #04A777;
+$color-dark: #0D160B;
+$color-light-pink: #FFBCB5; //melon
+$color-watermelon: #FF8C42; //watermelon
+$color-cloudy-blue: #ADA8B6; //silver metalic
+$color-yellow: #ff9300; //tot ceva galben
+$color-light-green: #09814A; //sea green
+$color-light-blue: #37505C; //charcoal
+$color-background: #F3F8F9;
+$color-button-cancel: #F1F1F1;
+
+// Colors text
+$color-text-light: #9999A7;
+$color-text-normal: #14303C;
+$color-text-dark: #36384B;
+
+// Font Weight
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-md-bold: 600;
+$font-weight-bold: 700;
+$font-weight-bolder: 900;
+$font-size-small: 12px;
+$font-size-normal: 14px;
+$font-size-paragraph: 15px;
+$font-size-xnormal: 16px;
+$font-size-big: 20px;
+$font-size-xbig: 40px;
+
+// Margin
+$margin-xsmall: 5px;
+$margin-tiny: 10px;
+$margin-small: 15px;
+$margin-default: 20px;
+$margin-big: 30px;
+$margin-bigger: 40px;
+$margin-xbig: 50px;
+
+// Border radius
+$border-radius-tiny: 5px;
+$border-radius-normal: 10px;
+$border-radius-big: 20px;
+
+// Animations
+$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+$ease-out: cubic-bezier(0, 0, 0.2, 1);
+$ease-in: cubic-bezier(0.4, 0, 1, 1);
+$ease-middle: cubic-bezier(0.24, 0.68, 0.29, 0.04);
+$big-ease-in-out: cubic-bezier(0.87, 0.02, 0.47, 0.91);
+$big-ease-out: cubic-bezier(0, 0.9, 0.48, 0.98);
+
+$tiny-bouncy-out: cubic-bezier(.4, 1.4, .69, .98);
+$small-bouncy-out: cubic-bezier(0.47, 1.62, 0.55, 1.08);
+$bouncy-out: cubic-bezier(0.48, 2, 0.53, 0.99);
+$big-bouncy-out: cubic-bezier(0.42, 2.94, 0.83, 0.67);
+$small-bouncy-in: cubic-bezier(0.57, -0.25, 0.58, 1);
+$bouncy-in: cubic-bezier(0.36, 0.06, 0.42, -0.78);
+$big-bouncy-in: cubic-bezier(0.36, 0.06, 0.42, -1.7);
+$bouncy-in-out: cubic-bezier(0.36, -1.54, 0.73, 2.51);
+
+// Classes for the input
+
+// Screen Width
+$tablet-screen-width-upper-bound: 1024px;
+$tablet-screen-width-lower-bound: 768px;
+
+$breakpoints: (
+        md: $tablet-screen-width-lower-bound,
+        lg: $tablet-screen-width-upper-bound,
+);
+
+@mixin media-breakpoint-tablet() {
+  @media only screen
+  and (max-width: $tablet-screen-width-upper-bound)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-phone() {
+  @media only screen
+  and (max-width: $tablet-screen-width-lower-bound)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-tablet-portrait() {
+  @media only screen
+  and (max-width: $tablet-screen-width-upper-bound)
+  and (orientation: portrait)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-tablet-landscape() {
+  @media only screen
+  and (max-width: $tablet-screen-width-upper-bound)
+  and (orientation: landscape)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-up($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+    @media (max-width: $breakpoint-value) {
+      @content;
+    }
+  } @else {
+    @warn 'Invalid breakpoints: #{$breakpoint}.'
+  }
+}
