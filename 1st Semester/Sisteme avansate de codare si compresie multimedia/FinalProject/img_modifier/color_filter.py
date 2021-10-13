@@ -8,17 +8,27 @@ import pywt.data
 
 
 class ColorFilters:
-    ascent, aero, ecg, camera, nino
-    filters = {"ascent": "Ascent", "vertical": "Vertical", 'diagonal': 'Diagonal'}
-    HORIZONTAL, VERTICAL, DIAGONAL = filters.keys()
+    filters = {"ascent": "Ascent", "aero": "Aero", 'camera': 'Camera', 'nino': "Nino"}
+    ASCENT, AERO, CAMERA, NINO = filters.keys()
 
 
-def color_filter(img, filter_name):
-    img_copy = img.copy()
+def ascent():
+    return do_wavelets(pywt.data.ascent())
 
-    # Load image
-    original = pywt.data.camera()
-    # original = img_copy
+
+def aero():
+    return do_wavelets(pywt.data.aero())
+
+
+def nino():
+    return do_wavelets(pywt.data.nino())
+
+
+def camera():
+    return do_wavelets(pywt.data.camera())
+
+
+def do_wavelets(original):
     # Wavelet transform of image, and plot approximation and details
     titles = ['Approximation', ' Horizontal detail', 'Vertical detail', 'Diagonal detail']
     coeffs2 = pywt.dwt2(original, 'bior1.3')
@@ -31,13 +41,6 @@ def color_filter(img, filter_name):
         ax.set_xticks([])
         ax.set_yticks([])
 
-    # Image from plot
-    ax.axis('off')
-    fig.tight_layout(pad=0)
-
-    # To remove the huge white borders
-    ax.margins(0)
-
     fig.canvas.draw()
     image_from_plot = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
     image_from_plot = image_from_plot.reshape(fig.canvas.get_width_height()[::-1] + (3,))
@@ -45,12 +48,16 @@ def color_filter(img, filter_name):
     img = ImageOps.invert(img)
     return img
 
-    if filter_name == ColorFilters.HORIZONTAL:
-        img = Image.fromarray(LH, 'RGB')
-    elif filter_name == ColorFilters.VERTICAL:
-        img = Image.fromarray(HL, 'RGB')
-    elif filter_name == ColorFilters.DIAGONAL:
-        img = Image.fromarray(HH, 'RGB')
+
+def color_filter(filter_name):
+    if filter_name == ColorFilters.ASCENT:
+        img = ascent()
+    elif filter_name == ColorFilters.AERO:
+        img = aero()
+    elif filter_name == ColorFilters.CAMERA:
+        img = camera()
+    elif filter_name == ColorFilters.NINO:
+        img = nino()
     else:
         raise ValueError(f"can't find filter {filter_name}")
 

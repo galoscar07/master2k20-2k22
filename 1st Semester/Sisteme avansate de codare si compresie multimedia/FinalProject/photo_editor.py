@@ -68,7 +68,6 @@ class FiltersTab(QWidget):
         self.main_layout = QHBoxLayout()
         self.main_layout.setAlignment(Qt.AlignCenter)
 
-        self.add_filter_thumb("none")
         for key, val in color_filter.ColorFilters.filters.items():
             self.add_filter_thumb(key, val)
 
@@ -79,10 +78,7 @@ class FiltersTab(QWidget):
         thumb_lbl.name = name
         thumb_lbl.setStyleSheet("border:2px solid #ccc;")
 
-        if name != "none":
-            thumb_lbl.setToolTip(f"Apply <b>{title}</b> filter")
-        else:
-            thumb_lbl.setToolTip('No filter')
+        thumb_lbl.setToolTip(f"Apply wavelet transformation on <b>{title}</b> image")
 
         thumb_lbl.setCursor(Qt.PointingHandCursor)
         thumb_lbl.setFixedSize(THUMB_SIZE, THUMB_SIZE)
@@ -92,10 +88,7 @@ class FiltersTab(QWidget):
 
     def on_filter_select(self, filter_name, e):
         global _img_preview
-        if filter_name != "none":
-            _img_preview = img_helper.color_filter(_img_original, filter_name)
-        else:
-            _img_preview = _img_original.copy()
+        _img_preview = img_helper.color_filter(filter_name)
 
         operations.color_filter = filter_name
         self.toggle_thumbs()
@@ -120,7 +113,7 @@ class MainLayout(QVBoxLayout):
                               "<ul><li>Horizontal detail</li>"
                               "<li>Vertical detail</li>"
                               "<li>Diagonal detail</li>"
-                              "Press <b>'Upload'</b> to to start<br>")
+                              "Press <b>'Next'</b> to to start<br>")
         self.img_lbl.setAlignment(Qt.AlignCenter)
 
         self.file_name = None
@@ -129,7 +122,7 @@ class MainLayout(QVBoxLayout):
         self.img_size_lbl = QLabel()
         self.img_size_lbl.setAlignment(Qt.AlignCenter)
 
-        upload_btn = QPushButton("Upload")
+        upload_btn = QPushButton("Next")
         upload_btn.setMinimumWidth(BTN_MIN_WIDTH)
         upload_btn.clicked.connect(self.on_upload)
         upload_btn.setStyleSheet("font-weight:bold;")
@@ -171,49 +164,25 @@ class MainLayout(QVBoxLayout):
             img.save(new_img_path)
 
     def on_upload(self):
-        img_path, _ = QFileDialog.getOpenFileName(self.parent, "Open image",
-                                                  "/Users/galoscar/Documents/GitProjects/college2k16-2k19/6th Semester/"
-                                                  "Image Processing/labs/LabAssignment1/PhotoEditorPython/assets",
-                                                  "Images (*.png *jpg)")
-        if img_path:
-            self.file_name = ntpath.basename(img_path)
+        global _img_original
+        _img_original = None
 
-            pix = QPixmap(img_path)
-            self.img_lbl.setPixmap(pix)
-            self.img_lbl.setScaledContents(True)
-            self.action_tabs.setVisible(True)
+        self.action_tabs.setVisible(True)
 
-            global _img_original
-            _img_original = ImageQt.fromqpixmap(pix)
+        self.update_img_size_lbl()
 
-            self.update_img_size_lbl()
+        for thumb in self.action_tabs.filters_tab.findChildren(QLabel):
+            img_filter_preview = img_helper.color_filter(thumb.name)
 
-            if _img_original.width < _img_original.height:
-                w = THUMB_SIZE
-                h = _get_ratio_height(_img_original.width, _img_original.height, w)
-            else:
-                h = THUMB_SIZE
-                w = _get_ratio_width(_img_original.width, _img_original.height, h)
+            preview_pix = ImageQt.toqpixmap(img_filter_preview)
+            thumb.setPixmap(preview_pix)
 
-            img_filter_thumb = img_helper.resize(_img_original, w, h)
-
-            global _img_preview
-            _img_preview = _img_original.copy()
-
-            for thumb in self.action_tabs.filters_tab.findChildren(QLabel):
-                if thumb.name != "none":
-                    img_filter_preview = img_helper.color_filter(img_filter_thumb, thumb.name)
-                else:
-                    img_filter_preview = img_filter_thumb
-
-                preview_pix = ImageQt.toqpixmap(img_filter_preview)
-                thumb.setPixmap(preview_pix)
-
-            self.save_btn.setEnabled(True)
+        self.save_btn.setEnabled(True)
 
     def update_img_size_lbl(self):
         self.img_size_lbl.setText(
-            f"<span style='font-size:13px'>Image Size {_img_original.width} width × {_img_original.height} height</span>")
+            f"<span style='font-size:13px, margin-top:20px'>Click an image down below to see the wavelet "
+            f"transformation</span>")
 
 
 class EasyPzUI(QWidget):

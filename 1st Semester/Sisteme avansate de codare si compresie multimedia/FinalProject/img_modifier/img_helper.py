@@ -18,6 +18,6 @@ def resize(img, width, height):
     return img.resize((width, height))
 
 
-def color_filter(img, filter_name):
+def color_filter(filter_name):
     """Filter image"""
-    return cf.color_filter(img, filter_name)
+    return cf.color_filter(filter_name)
