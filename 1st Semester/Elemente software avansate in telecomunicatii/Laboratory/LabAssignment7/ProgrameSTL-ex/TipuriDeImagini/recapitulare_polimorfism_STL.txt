@@ -1,0 +1,18 @@
+O imagine este un obiect definit printr-un dreptunghi de dimensiune L*l si un nume.
+Se dau urmatoarele tipuri de imagini:
+
+- bmp_16bpp (L*l*16)
+- bmp_256bpp (L*l*256)
+- jpg (bmp256 * 0.2)
+- gif (bmp256 * 0.3)
+- tiff (bmp256 * 0.5)
+
+Sa se realizeze ierarhia de clase pentru imaginile de mai sus.
+Implementati un album foto care poate stoca poze din orice tip si orice dimensiune. (container STL)
+Albumul sa aiba urmatoarele functii:
+- GetPicsNo()  - returneaza numarul total de imagini
+- GetTotalSize() - returneaza spatiul ocupat de album
+- GetPicsNo(Type type) - returneaza numarul de imagini care apartin unui anumit tip (jpg, tiff, etc)
+- GetPicsByName(string name) - returneaza o poza dupa nume
+- SortByName(), SortBySize(bool down), sorteaza albumul dupa numele pozelor, sau dupa dimensiune ordonate crescator/descrescator
+- Compress() - comprima o imagine, fiecare tip de imagine are propriul tip de comprimare (functia va afisa un text distinct pentru fiecare tip de imagine)
